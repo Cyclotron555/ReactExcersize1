@@ -1,10 +1,26 @@
-import "./styles.css";
+import { useEffect, useState } from "react";
 
 export default function App() {
+  const [mousePos, setMousePos] = useState({});
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      setMousePos({ x: event.clientX, y: event.clientY });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <h1>Hello CodeSandbox</h1>
-      <h2>Start editing to see some magic happen!</h2>
+    <div>
+      The mouse is at position{" "}
+      <b>
+        ({mousePos.x}, {mousePos.y})
+      </b>
     </div>
   );
 }
